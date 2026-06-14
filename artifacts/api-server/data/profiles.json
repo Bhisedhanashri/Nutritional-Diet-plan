@@ -1,0 +1,15 @@
+[
+  {
+    "id": 1,
+    "age": 30,
+    "gender": "male",
+    "heightCm": 175,
+    "weightKg": 70,
+    "activityLevel": "moderately_active",
+    "dietPreference": "non_vegetarian",
+    "goal": "maintenance",
+    "userId": 1,
+    "dailyCalorieTarget": 2556,
+    "createdAt": "2026-05-09T09:21:57.354Z"
+  }
+]

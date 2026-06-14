@@ -1,0 +1,6 @@
+id,userId,mealType,foodName,portionSize,calories,proteinGrams,carbsGrams,fatGrams,loggedAt,createdAt
+1,1,lunch,chiken,2,200,45,,,2026-05-15,2026-05-15T16:30:51.335Z
+2,1,lunch,pohe,2,300,34,,,2026-05-15,2026-05-15T16:31:32.696Z
+3,1,lunch,bhendi,2,200,45,,,2026-05-25,2026-05-25T06:43:50.381Z
+4,1,lunch,salad,2,600,45,55,28,2026-05-31,2026-05-31T11:13:49.608Z
+5,1,lunch,chapati,1,90,3,18,0,2026-05-31,2026-05-31T11:33:13.474Z
