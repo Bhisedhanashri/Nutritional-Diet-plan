@@ -8,11 +8,21 @@ const router = Router();
 
 function cleanJson(str: string): string {
   let clean = str.trim();
-  if (clean.startsWith("```")) {
-    clean = clean.replace(/^```[a-zA-Z]*\n?/, "");
-    clean = clean.replace(/```$/, "");
-    clean = clean.trim();
+  
+  // Try to find a JSON block between ```json and ```
+  const jsonBlockRegex = /```(?:json)?\s*([\s\S]*?)\s*```/;
+  const match = clean.match(jsonBlockRegex);
+  if (match && match[1]) {
+    return match[1].trim();
   }
+  
+  // If no block with backticks, try to find the first '{' and last '}'
+  const firstBrace = clean.indexOf('{');
+  const lastBrace = clean.lastIndexOf('}');
+  if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
+    return clean.substring(firstBrace, lastBrace + 1).trim();
+  }
+  
   return clean;
 }
 
@@ -222,8 +232,12 @@ Respond in this EXACT JSON format (no markdown):
 
     const content = completion.choices[0]?.message?.content ?? "{}";
     try {
-      nutrition = JSON.parse(cleanJson(content));
-    } catch {
+      console.log(`[NutriAI Debug] Raw AI response for food check:`, content);
+      const cleaned = cleanJson(content);
+      console.log(`[NutriAI Debug] Cleaned JSON content:`, cleaned);
+      nutrition = JSON.parse(cleaned);
+    } catch (parseError) {
+      console.error(`[NutriAI Error] Failed to parse AI JSON response:`, parseError);
       nutrition = { foodName, portionSize, calories: 0, proteinGrams: 0, carbsGrams: 0, fatGrams: 0, fiberGrams: 0, healthScore: 5, alternatives: [], tips: "" };
     }
   } catch (error) {

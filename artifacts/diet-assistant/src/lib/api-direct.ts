@@ -1,6 +1,6 @@
 import { getAuthHeaders } from "./auth";
 
-const API_URL = import.meta.env.VITE_API_BASE_URL || "";
+const API_URL = "";
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 async function req<T>(path: string, options: RequestInit = {}): Promise<T> {
@@ -10,7 +10,17 @@ async function req<T>(path: string, options: RequestInit = {}): Promise<T> {
     credentials: "include",
     headers: { "Content-Type": "application/json", ...getAuthHeaders(), ...(options.headers ?? {}) },
   });
-  const data = await res.json();
+  
+  let data: any = null;
+  const text = await res.text();
+  if (text.trim() !== "") {
+    try {
+      data = JSON.parse(text);
+    } catch {
+      data = text;
+    }
+  }
+  
   if (!res.ok) throw data;
   return data as T;
 }
