@@ -39,9 +39,8 @@ services:
       sizeGB: 1
 
   # Frontend static client
-  - type: web
+  - type: static
     name: nutriai-client
-    env: static
     buildCommand: pnpm install && pnpm --filter "@workspace/diet-assistant" run build
     publishPath: artifacts/diet-assistant/dist/public
     routes:
